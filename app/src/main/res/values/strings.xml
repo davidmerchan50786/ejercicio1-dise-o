@@ -10,4 +10,11 @@
     <string name="label_kas_naranja">Kas Naranja</string>
     <string name="btn_comprar">Comprar</string>
     <string name="hint_cantidad">0</string>
+
+    <string name="hint_num_tarjeta">Numero tarjeta</string>
+    <string name="hint_mes">mes</string>
+    <string name="hint_anio">año</string>
+    <string name="hint_cvv">cvv</string>
+    <string name="btn_pagar">PAGAR</string>
+
 </resources>

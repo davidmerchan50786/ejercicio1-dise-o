@@ -2,34 +2,24 @@ package com.example.ejercicio1
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    // Vinculamos vistas con variables. Si el ID no existe en el XML, esto fallará en compilación.
-    private companion object {
-        const val PRECIO_VINO = 3.21
-        const val PRECIO_CERVEZA = 0.62
-        const val PRECIO_REDBULL = 1.25
-        const val PRECIO_KAS_LIMON = 0.54
-        const val PRECIO_KAS_NARANJA = 0.54
-        const val PRECIO_COCACOLA = 0.57
-    }
-
+    // Precios de las bebidas
+    private val PRECIO_VINO = 3.21
+    private val PRECIO_CERVEZA = 0.62
+    private val PRECIO_REDBULL = 1.25
+    private val PRECIO_KAS_LIMON = 0.54
+    private val PRECIO_KAS_NARANJA = 0.54
+    private val PRECIO_COCACOLA = 0.57
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Vinculamos vistas con variables. Si el ID no existe en el XML, esto fallará en compilación.
+        // Pillamos las vistas
         val etNombre = findViewById<EditText>(R.id.etNombre)
         val chkMayorEdad = findViewById<CheckBox>(R.id.chkMayorEdad)
         val edVino = findViewById<EditText>(R.id.edVino)
@@ -39,90 +29,52 @@ class MainActivity : AppCompatActivity() {
         val edKasNaranja = findViewById<EditText>(R.id.edKasNaranja)
         val edCocaCola = findViewById<EditText>(R.id.edCocaCola)
         val btnCalcular = findViewById<Button>(R.id.bCalcular)
-        val tvResuelto = findViewById<TextView>(R.id.tvResuelto)
 
         btnCalcular.setOnClickListener {
-            // Validar campos obligatorios, si falla, mostramos mensaje y paramos
+            // Comprobamos que haya puesto el nombre
             val nombre = etNombre.text.toString().trim()
             if (nombre.isEmpty()) {
-                Toast.makeText(this, "Nombre y apellidos son obligatorios", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Pon tu nombre", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // si el campo está vacío, asumimos 0 (evita crash por formato)
-            val cantidadVino = edVino.text.toString().toIntOrNull() ?: 0
-            val cantidadCerveza = edCerveza.text.toString().toIntOrNull() ?: 0
-            val cantidadRedBull = edRedBull.text.toString().toIntOrNull() ?: 0
-            val cantidadKasLimon = edKasLimon.text.toString().toIntOrNull() ?: 0
-            val cantidadKasNaranja = edKasNaranja.text.toString().toIntOrNull() ?: 0
-            val cantidadCocaCola = edCocaCola.text.toString().toIntOrNull() ?: 0
+            // Cogemos las cantidades, si esta vacio ponemos 0
+            val cantVino = edVino.text.toString().toIntOrNull() ?: 0
+            val cantCerveza = edCerveza.text.toString().toIntOrNull() ?: 0
+            val cantRedBull = edRedBull.text.toString().toIntOrNull() ?: 0
+            val cantKasLimon = edKasLimon.text.toString().toIntOrNull() ?: 0
+            val cantKasNaranja = edKasNaranja.text.toString().toIntOrNull() ?: 0
+            val cantCocaCola = edCocaCola.text.toString().toIntOrNull() ?: 0
 
-            // si compra vino o cerveza, debe ser mayor de edad
-            val compraAlcohol = cantidadVino > 0 || cantidadCerveza > 0
-            if (compraAlcohol && !chkMayorEdad.isChecked) {
-                Toast.makeText(
-                    this,
-                    "Debe ser mayor de edad para comprar alcohol",
-                    Toast.LENGTH_SHORT
-                ).show()
+            // Si quiere alcohol tiene que ser mayor de edad
+            if ((cantVino > 0 || cantCerveza > 0) && !chkMayorEdad.isChecked) {
+                Toast.makeText(this, "Tienes que ser mayor de edad para comprar alcohol", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // calcular total
-            val total = cantidadVino * PRECIO_VINO +
-                    cantidadCerveza * PRECIO_CERVEZA +
-                    cantidadRedBull * PRECIO_REDBULL +
-                    cantidadKasLimon * PRECIO_KAS_LIMON +
-                    cantidadKasNaranja * PRECIO_KAS_NARANJA +
-                    cantidadCocaCola * PRECIO_COCACOLA
+            // Calculamos el total
+            val total = cantVino * PRECIO_VINO +
+                    cantCerveza * PRECIO_CERVEZA +
+                    cantRedBull * PRECIO_REDBULL +
+                    cantKasLimon * PRECIO_KAS_LIMON +
+                    cantKasNaranja * PRECIO_KAS_NARANJA +
+                    cantCocaCola * PRECIO_COCACOLA
 
+            // Montamos el resumen de la compra
+            val resumen = StringBuilder()
+            resumen.append("Resumen de compra:\n")
+            if (cantVino > 0) resumen.append("- Vino x$cantVino: ${"%.2f".format(cantVino * PRECIO_VINO)}€\n")
+            if (cantCerveza > 0) resumen.append("- Cerveza x$cantCerveza: ${"%.2f".format(cantCerveza * PRECIO_CERVEZA)}€\n")
+            if (cantRedBull > 0) resumen.append("- Red Bull x$cantRedBull: ${"%.2f".format(cantRedBull * PRECIO_REDBULL)}€\n")
+            if (cantKasLimon > 0) resumen.append("- Kas Limon x$cantKasLimon: ${"%.2f".format(cantKasLimon * PRECIO_KAS_LIMON)}€\n")
+            if (cantKasNaranja > 0) resumen.append("- Kas Naranja x$cantKasNaranja: ${"%.2f".format(cantKasNaranja * PRECIO_KAS_NARANJA)}€\n")
+            if (cantCocaCola > 0) resumen.append("- Coca Cola x$cantCocaCola: ${"%.2f".format(cantCocaCola * PRECIO_COCACOLA)}€\n")
+            resumen.append("\nTotal: ${"%.2f".format(total)}€")
 
-            val resumen = StringBuilder().apply {
-                append("Resumen de compra:\n")
-                if (cantidadVino > 0) append("- Vino x$cantidadVino: ${"%.2f".format(cantidadVino * PRECIO_VINO)}€\n")
-                if (cantidadCerveza > 0) append(
-                    "- Cerveza x$cantidadCerveza: ${
-                        "%.2f".format(
-                            cantidadCerveza * PRECIO_CERVEZA
-                        )
-                    }€\n"
-                )
-                if (cantidadRedBull > 0) append(
-                    "- Red Bull x$cantidadRedBull: ${
-                        "%.2f".format(
-                            cantidadRedBull * PRECIO_REDBULL
-                        )
-                    }€\n"
-                )
-                if (cantidadKasLimon > 0) append(
-                    "- Kas Limón x$cantidadKasLimon: ${
-                        "%.2f".format(
-                            cantidadKasLimon * PRECIO_KAS_LIMON
-                        )
-                    }€\n"
-                )
-                if (cantidadKasNaranja > 0) append(
-                    "- Kas Naranja x$cantidadKasNaranja: ${
-                        "%.2f".format(
-                            cantidadKasNaranja * PRECIO_KAS_NARANJA
-                        )
-                    }€\n"
-                )
-                if (cantidadCocaCola > 0) append(
-                    "- Coca Cola x$cantidadCocaCola: ${
-                        "%.2f".format(
-                            cantidadCocaCola * PRECIO_COCACOLA
-                        )
-                    }€\n"
-                )
-                append("\nTotal: ${"%.2f".format(total)}€")
-            }.toString()
-
-
-            // mostramos resultado en textview
-            tvResuelto.text = resumen
-
+            // Abrimos la pantalla de pago y le pasamos los datos
+            val intent = Intent(this, PagoActivity::class.java)
+            intent.putExtra("resumen", resumen.toString())
+            startActivity(intent)
         }
     }
 }
