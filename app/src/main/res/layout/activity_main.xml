@@ -2,24 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
-
 
     <EditText
         android:id="@+id/etNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_nombre"
-        android:autofillHints="name"
         android:inputType="textPersonName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/sEdad"
+        android:id="@+id/chkMayorEdad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,7 +34,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sEdad">
+        app:layout_constraintTop_toBottomOf="@+id/chkMayorEdad">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -181,7 +178,7 @@
 
 
     <TextView
-        android:id="@+id/tvResultado"
+        android:id="@+id/tvResuelto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

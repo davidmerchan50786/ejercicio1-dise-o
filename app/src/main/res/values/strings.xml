@@ -6,7 +6,7 @@
     <string name="label_cerveza">Cerveza</string>
     <string name="label_redbull">Red Bull</string>
     <string name="label_kas_limon">Kas limon</string>
-    <string name="label_cocacola">Coca cola</string>
+    <string name="label_cocacola">Coca Cola</string>
     <string name="label_kas_naranja">Kas Naranja</string>
     <string name="btn_comprar">Comprar</string>
     <string name="hint_cantidad">0</string>
